@@ -1,50 +1,30 @@
-Microservice with 2 FastAPI Apps and RabbitMQ
-This microservice consists of two FastAPI apps that communicate with each other through RabbitMQ. To get started, you can use Docker Compose to run the microservice:
+# Microservice with FastAPI Apps
 
+This is a microservice consisting of two FastAPI apps that communicate with each other through RabbitMQ. The services can be started using Docker Compose.
+
+## Prerequisites
+
+Make sure you have the following installed on your system:
+- Docker
+- Docker Compose
+
+#1. Clone this repository to your local machine:
+
+```bash
+git clone <repository-url>
+cd <project-directory>
 docker-compose up -d
-Directory Structure
-redis_fast,
-├─ .DS_Store,
-├─ README.md,
-└─ project,
-   ├─ .env,
-   ├─ __init__.py,
-   ├─ build,
-   │  └─ docker,
-   │     ├─ Dockerfile.inventory,
-   │     └─ Dockerfile.payment,
-   ├─ docker-compose.yml,
-   ├─ inventory,
-   │  ├─ __pycache__,
-   │  │  ├─ main.cpython-311.pyc,
-   │  │  └─ main.cpython-39.pyc,
-   │  ├─ consumer.py,
-   │  └─ main.py,
-   ├─ payment,
-   │  ├─ __init__.py,
-   │  ├─ __pycache__,
-   │  │  ├─ consumer.cpython-311.pyc,
-   │  │  ├─ consumer.cpython-39.pyc,
-   │  │  ├─ db.cpython-311.pyc,
-   │  │  ├─ db.cpython-39.pyc,
-   │  │  ├─ main.cpython-311.pyc,
-   │  │  └─ main.cpython-39.pyc,
-   │  ├─ db.py,
-   │  ├─ main.py,
-   │  └─ sender.py,
-   ├─ requirements.txt,
-   └─ setup.py,
-How to Run the Microservice
-To run the microservice, you can use Docker Compose:
+```
 
-docker-compose up -d
-This command will start the services defined in the docker-compose.yml file in detached mode, meaning that they will run in the background. You can then access the apps at the following URLs:
+This command will start the FastAPI apps, the RabbitMQ message broker, and any other required services defined in the docker-compose.yml file. The services will run in detached mode (-d flag), allowing them to run in the background.
 
-Inventory app: http://localhost:8000
-Payment app: http://localhost:8002
-Troubleshooting
-If you encounter any issues while running the microservice, here are some troubleshooting tips:
+Verify that the microservice is running.
+Open your web browser and visit the following URLs:
 
-Make sure you have Docker and Docker Compose installed on your machine.
-Check that the ports defined in the docker-compose.yml file are not already in use by other applications on your machine.
-If you're having trouble with RabbitMQ, try accessing the management GUI at http://localhost:15672 using the credentials guest and guest.
+App 1: http://localhost:8000
+App 2: http://localhost:8002
+
+##Please let me know if there's anything else I can assist you with!
+
+
+
