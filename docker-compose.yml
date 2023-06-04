@@ -1,0 +1,59 @@
+version: "3.8"
+
+services:
+  rabbitmq:
+    container_name: "rabbitmq"
+    image: rabbitmq:3.8-management-alpine
+    environment:
+      - RABBITMQ_DEFAULT_USER=myuser
+      - RABBITMQ_DEFAULT_PASS=mypassword
+    ports:
+      # AMQP protocol port
+      - '5672:5672'
+      # HTTP management UI port
+      - '15672:15672'
+  postgres:
+    container_name: postgres
+    image: postgres
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 123
+      POSTGRES_HOST: postgres
+      POSTGRES_DB: postgres
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U postgres" ]
+      interval: 1s
+      timeout: 1s
+      retries: 120
+    ports:
+      - 5432:5432
+  fastapi_inventory:
+    build:
+      context: .
+      dockerfile: ./build/docker/Dockerfile.inventory
+    working_dir: /app/inventory
+    ports:
+      - '8000:8000'
+    depends_on:
+      - rabbitmq
+    volumes:
+      - ./inventory:/app/inventory
+    restart: on-failure
+  fastapi_payment:
+    build:
+      context: .
+      dockerfile: ./build/docker/Dockerfile.payment
+    working_dir: /app/payment
+
+    ports:
+      - '8002:8002'
+    depends_on:
+      - rabbitmq
+      - postgres
+    volumes:
+      - ./payment:/app/payment
+    restart: on-failure
+volumes:
+  postgres-data: {}
